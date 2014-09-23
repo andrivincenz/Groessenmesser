@@ -1,35 +1,45 @@
 package ch.appquest.groessenmesser;
 
 import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.widget.Button;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements OnClickListener{
 
+	/** Called when the activity is first created. */
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+	public void onCreate(Bundle savedInstanceState) {
+	    super.onCreate(savedInstanceState);
+	    setContentView(R.layout.activity_main);
+	    
+	    Button kamerabutton = (Button) findViewById(R.id.cmdStartKamera);
+	    kamerabutton.setOnClickListener((android.view.View.OnClickListener) this);
+	
+	    // TODO Auto-generated method stub
+	}
+	
+	@Override
+	public void onClick(DialogInterface dialog, int which) {
+		// TODO Auto-generated method stub
+		Intent intent = new Intent(this, KameraActivity.class);
+		startActivity(intent);
+	}
+	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
 	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-		// test
-	}
+
+
 }
