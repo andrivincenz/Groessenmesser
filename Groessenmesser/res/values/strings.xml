@@ -5,6 +5,10 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_kamera">KameraActivity</string>
+    <string name="calc_alpha">Alpha</string>
+    <string name="calc_beta">Beta</string>
+    <string name="calc_distance">Distance</string>
+    <string name="calc_calc">Calculate</string>
     <color name="green">#00FF00</color>
 
 </resources>
