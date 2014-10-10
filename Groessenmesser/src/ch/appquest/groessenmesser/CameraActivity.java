@@ -41,6 +41,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
+		// initialise sensors
 		mSensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
 		mMagnetField = mSensorManager.getSensorList(Sensor.TYPE_MAGNETIC_FIELD).get(0);
 		mAcceleration = mSensorManager.getSensorList(Sensor.TYPE_ACCELEROMETER).get(0);
@@ -63,6 +64,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
 	protected void onPause() {
 		super.onPause();
 		
+		// unregister sensors
 		mSensorManager.unregisterListener(this);
 		
 		// camera release
@@ -70,13 +72,14 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
 			camera.stopPreview();
 			camera.release();
 		}
-	}// nice. task 1 abgschlosse. jetzt mömmer chönd alpha und beta speichere. und zwo jedes mol wenn klickt wird. aber wenn's 2 mol klickt wird nebis anders mach.
+	}
 
 	
 	@Override
 	protected void onResume() {
 		super.onResume();
 		
+		// register sensors
 		if (mMagnetField != null) {
 			mSensorManager.registerListener(this, mMagnetField, SensorManager.SENSOR_DELAY_NORMAL);
 		}
@@ -89,6 +92,10 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
 		SurfaceView cameraView = (SurfaceView) findViewById(R.id.surfaceView);
 		cameraViewHolder = cameraView.getHolder();
 		cameraViewHolder.addCallback(this);		
+		
+		// reset buffer
+		alpha = 0;
+		beta = 0;
 	}
 	
 	public void surfaceCreated(SurfaceHolder holder) {
@@ -128,12 +135,13 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
  
 	@Override
 	public void onSensorChanged(SensorEvent event) {
+		// copy sensor date in buffer
 		if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-			System.arraycopy(event.values, 0, accelerationData, 0, 3); // kopiert alle accel. daten in accelerationData
+			System.arraycopy(event.values, 0, accelerationData, 0, 3);
 		}
  
-		if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) { // hier sobald magnet data ändern
-			System.arraycopy(event.values, 0, magneticFieldData, 0, 3); // kopiere alle magneticdaten in magneticFieldData ja aber denn bruchemer ja mMagnetic ned
+		if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
+			System.arraycopy(event.values, 0, magneticFieldData, 0, 3);
 		}
 	}
  
